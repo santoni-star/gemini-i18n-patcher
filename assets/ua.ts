@@ -1,47 +1,24 @@
-/**
- * @license
- * Copyright 2025 Google LLC
- * SPDX-License-Identifier: Apache-2.0
- */
 
 export const ua: any = {
-  placeholder: '  Введіть повідомлення або @шлях/до/файлу',
-  placeholderShell: '  Введіть команду оболонки',
-  placeholderVim: "  Натисніть 'i' для режиму ВСТАВКИ та 'Esc' для НОРМАЛЬНОГО режиму.",
+  // Старі ключі для сумісності
+  "placeholder": "  Введіть повідомлення або @шлях/до/файлу",
+  "placeholderShell": "  Введіть команду оболонки",
+  "placeholderVim": "  Натисніть 'i' для режиму ВСТАВКИ та 'Esc' для НОРМАЛЬНОГО режиму.",
+
+  // Нові ключі (прямий текст із коду Google)
+  "  Type your message or @path/to/file": "  Введіть повідомлення або @шлях/до/файлу",
+  "  Type your shell command": "  Введіть команду оболонки",
+  "  Press 'i' for INSERT mode and 'Esc' for NORMAL mode.": "  Натисніть 'i' для режиму ВСТАВКИ та 'Esc' для НОРМАЛЬНОГО режиму.",
+  "Language": "Мова",
+  "Language / Мова": "Мова",
+  "Clear the screen and conversation history": "Очистити екран та історію розмови",
+  "Tips for getting started:": "Поради для початку роботи:",
+  "1. Ask questions, edit files, or run commands.": "1. Ставте запитання, редагуйте файли або виконуйте команди.",
+  "2. Be specific for the best results.": "2. Будьте конкретними для кращого результату.",
+  "3. /help for more information.": "3. Введіть /help для додаткової інформації.",
+  "no sandbox (see /docs)": "без пісочниці (див. /docs)",
   
   // Команди
-  command_about: 'Показати інформацію про версію',
-  command_auth: 'Змінити метод аутентифікації або увійти',
-  command_bug: 'Подати звіт про помилку безпосередньо розробникам',
-  command_chat: 'Керування контрольними точками розмови (save, resume, list, delete, share)',
-  command_clear: 'Очистити екран та історію розмови',
-  command_compress: 'Зберегти токени, стиснувши контекст розмови',
-  command_copy: 'Скопіювати останню відповідь у буфер обміну',
-  command_directory: 'Додати або переглянути каталоги у робочому просторі',
-  command_docs: 'Відкрити повну документацію у браузері',
-  command_editor: 'Встановити бажаний зовнішній редактор',
-  command_exit: 'Вийти з програми',
-  command_quit: 'Вийти з програми',
-  command_help: 'Отримати довідку по командам та клавіатурним скороченням',
-  command_ide: 'Керування інтеграцією з IDE (VS Code тощо)',
-  command_init: 'Створити файл GEMINI.md для поточного проекту',
-  command_mcp: 'Керування серверами та інструментами Model Context Protocol',
-  command_memory: 'Керування інструкційним контекстом та пам\'яттю (GEMINI.md)',
-  command_model: 'Вибрати модель Gemini для розмови',
-  command_privacy: 'Показати повідомлення про конфіденційність та умови використання',
-  command_restore: 'Відновити файли проекту до попереднього стану',
-  command_settings: 'Переглянути та змінити налаштування у редакторі',
-  command_stats: 'Переглянути статистику використання моделей або інструментів',
-  command_theme: 'Змінити кольорову тему інтерфейсу',
-  command_tools: 'Переглянути список усіх доступних інструментів',
-  command_vim: 'Перемкнути використання клавіш Vim',
-  command_findDocs: 'Знайти відповідну документацію за допомогою ШІ',
-  command_setupGithub: 'Налаштувати GitHub Actions для проекту',
-  command_terminalSetup: 'Налаштувати клавіші терміналу для багаторядкового вводу',
-
-  // Інші рядки (можна доповнювати за потреби)
-  updateAvailable: 'Доступне оновлення Gemini CLI!',
-  statsTitle: 'Агент вимикається. Бувайте!',
-  authExitingGoogle: 'Вхід через Google... Перезапуск Gemini CLI для продовження.',
-  // ... тут можна додати решту з вашого файлу ua.ts
+  "command_clear": "Очистити екран та історію розмови",
+  "command_help": "Отримати довідку"
 };

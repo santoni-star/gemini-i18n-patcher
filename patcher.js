@@ -8,7 +8,7 @@ const TARGET_DIR = process.argv[2] || '../gemini-cli';
 
 async function run() {
   const absTarget = path.resolve(TARGET_DIR);
-  console.log('🚀 STABLE PATCH: ' + absTarget);
+  console.log('🚀 RESTORING & ENHANCING TRANSLATION: ' + absTarget);
 
   const schemaPath = path.join(absTarget, 'packages/cli/src/config/settingsSchema.ts');
   if (fs.existsSync(schemaPath)) {
@@ -24,24 +24,28 @@ async function run() {
     fs.writeFileSync(geminiPath, content);
   }
 
-  const i18nPath = path.join(absTarget, 'packages/cli/src/i18n.ts');
-  const i18nContent = "import { en } from './locales/en.js';\nimport { ua } from './locales/ua.js';\nexport function t(text) { if (!text) return text; const s = (globalThis as any).__GEMINI_CONFIG__?.merged || (globalThis as any).__GEMINI_CONFIG__; const l = s?.general?.locale || s?.locale || 'ua'; if (l === 'en') return text; const clean = text.trim(); return ua[clean] || en[clean] || text; }\nexport const strings = new Proxy({}, { get(_, prop) { return t(prop.toString()); } });";
-  fs.writeFileSync(i18nPath, i18nContent);
+  const i18nContent = "import { en } from './locales/en.js';\nimport { ua } from './locales/ua.js';\nexport function t(text) { if (!text) return text; const s = (globalThis as any).__GEMINI_CONFIG__?.merged || (globalThis as any).__GEMINI_CONFIG__; const l = s?.general?.locale || s?.locale || 'ua'; if (l === 'en') return text; const clean = text.trim(); return ua[clean] || ua[text] || en[clean] || text; }\nexport const strings = new Proxy({}, { get(_, prop) { return ua[prop] || en[prop] || prop; } });";
+  fs.writeFileSync(path.join(absTarget, 'packages/cli/src/i18n.ts'), i18nContent);
 
-  // Патчимо ТІЛЬКИ найнадійніші файли
-  const filesToPatch = [
+  const uiFiles = [
     'packages/cli/src/ui/components/InputPrompt.tsx',
-    'packages/cli/src/ui/components/Composer.tsx'
+    'packages/cli/src/ui/components/Composer.tsx',
+    'packages/cli/src/ui/components/StatusDisplay.tsx',
+    'packages/cli/src/ui/components/WelcomeBanner.tsx'
   ];
 
-  filesToPatch.forEach(relPath => {
+  uiFiles.forEach(relPath => {
     const fullPath = path.join(absTarget, relPath);
     if (fs.existsSync(fullPath)) {
       let content = fs.readFileSync(fullPath, 'utf8');
       if (!content.includes('import { t }')) content = "import { t } from '../../i18n.js';\n" + content;
-      content = content.replace(/>([^<>{}\n]+)</g, '>{t(`$1`)}<');
+      content = content.replace(/label=(['"])([^'"]+)\1/g, 'label={t("$2")}');
+      content = content.replace(/placeholder=(['"])([^'" ]+)\1/g, 'placeholder={t("$2")}');
+      content = content.replace(/description=(['"])([^'" ]+)\1/g, 'description={t("$2")}');
+      content = content.replace(/title=(['"])([^'" ]+)\1/g, 'title={t("$2")}');
+      content = content.replace(/>([^<>{}\n\r]+)</g, '>{t(`$1`)}<');
       fs.writeFileSync(fullPath, content);
-      console.log('✅ Patched: ' + relPath);
+      console.log('✅ Fully Patched: ' + relPath);
     }
   });
 
@@ -50,7 +54,7 @@ async function run() {
   fs.copyFileSync(path.join(__dirname, 'assets/ua.ts'), path.join(localesDir, 'ua.ts'));
   fs.copyFileSync(path.join(__dirname, 'assets/en.ts'), path.join(localesDir, 'en.ts'));
 
-  console.log('🎉 SUCCESS!');
+  console.log('🎉 Done! Ready to bundle.');
 }
 
 run();
